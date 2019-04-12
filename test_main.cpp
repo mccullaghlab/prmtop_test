@@ -8,11 +8,14 @@ using namespace std;
 #include "atom_class.h"
 #include "bond_class.h"
 #include "config_class.h"
-#include "read_prmtop.h"
+#include "stringlib.h"
+//#include "read_prmtop.h"
 
-void read_cfg_file(char*, config& configs);
-void read_prmtop(char*); //, atom * , bond *);
+void read_cfg_file(char*, config& );
+void read_prmtop(config , char*); //, atom * , bond *);
 
+#define MAXCHAR 250
+#define MAXLEN 80
 int main (int argc, char* argv[]) {
 
 	char *paramFileName;
@@ -22,32 +25,41 @@ int main (int argc, char* argv[]) {
 
 	read_cfg_file(argv[1],configs);
 	printf("prmtop file name: %s\n", configs.prmtopFileName);
-	read_prmtop(configs.prmtopFileName); //, atoms, bonds);
+	printf("prmtop file name: %s\n", configs.prmtopFileName);
+	read_prmtop(configs, configs.prmtopFileName); //, atoms, bonds);
+	printf("prmtop file name: %s\n", configs.prmtopFileName);
 
 }
 
 void read_cfg_file(char* cfgFile, config& configs) {
 
 	char *token;
+	char *firstToken;
+	char temp[MAXLEN];
 	char const *search = "=";
-	char line[128]; // maximum number of character per line set to 128
+	char const *comment = "#";
+	char line[MAXCHAR]; // maximum number of character per line set to 128
 	char *paramFileName;
 	FILE *inFile = fopen(cfgFile,"r");
 	printf("in subroutine: %s\n", cfgFile);
 	if ( inFile != NULL) {
-		while (fgets(line, sizeof line, inFile) != NULL) {
-			token = strtok(line, search);
+		while (fgets(line, MAXCHAR, inFile) != NULL) {
+			firstToken = strtok(line,comment);
+			token = strtok(firstToken, search);
 			if (strcmp(token,"prmtop")==0) {
-				configs.prmtopFileName = strtok(NULL, search);
+				printf("prmtop\n");
+				strncpy(temp,strtok(NULL, search),MAXLEN);
+				configs.prmtopFileName = trim(temp);
+				printf("%s\n",configs.prmtopFileName);
 			}
 		}
 		fclose( inFile );
 	}
 }
 
-void read_prmtop(char* prmtopFileName) {
+void read_prmtop(config configs, char* prmtopFileName) {
 
-	char line[80];
+	char line[MAXCHAR];
 	char const *FlagSearch = "\%FLAG";
 	char const *search = " ";
 	char *flag;
@@ -55,10 +67,11 @@ void read_prmtop(char* prmtopFileName) {
 	FILE *prmFile = fopen(prmtopFileName, "r");
 
 	printf("in subroutine: %s\n", prmtopFileName);
+	printf("in subroutine: %s\n", configs.prmtopFileName);
 	printf("Flag: %s\n", FlagSearch);
 	if ( prmFile != NULL) {
-		while (fgets(line, sizeof line, prmFile) != NULL) {
-			//token = strtok(line, '%FLAG');
+		while (fgets(line, MAXCHAR, prmFile) != NULL) {
+			printf("%s,%d\n", line, strncmp(line,FlagSearch,5));
 			if (strncmp(line,FlagSearch,5)==0) {
 				token = strtok(line, search);
 				flag = strtok(NULL, search);
