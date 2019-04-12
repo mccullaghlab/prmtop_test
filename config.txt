@@ -1,0 +1,13 @@
+
+
+
+hello = world
+this 
+is a config 
+
+FILE!=thisFile
+
+prmtop=PDI1.prmtop
+
+
+

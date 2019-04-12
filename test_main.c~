@@ -1,0 +1,29 @@
+
+/* test code */
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+using namespace std;
+
+int main (char* argv[]) {
+
+	read_cfg_file(argv[0])
+}
+
+void read_cfg_file(char* cfgFile) {
+
+    inFile.open(cfgFile);
+    if (!inFile) {
+        cout << "Unable to open file";
+        exit(1); // terminate with error
+    }
+
+    while (inFile >> x) {
+        sum = sum + x;
+    }
+
+    inFile.close();
+
+}
+

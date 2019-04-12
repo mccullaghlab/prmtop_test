@@ -1,0 +1,3 @@
+
+void read_prmtop(char *, atom * , bond *);
+
