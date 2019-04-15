@@ -48,6 +48,8 @@ class atom
 		float sigma;
 		int   *key;
 		
+		void allocate();
+
 		// initialize all arrays on CPU memory
 		//void initialize(float T, float lbox);
 		// initialize all arrays on GPU memory

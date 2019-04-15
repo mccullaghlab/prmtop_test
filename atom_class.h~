@@ -1,8 +1,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <cuda.h>
-#include <cuda_runtime.h>
+//#include <cuda.h>
+//#include <cuda_runtime.h>
 #include <math.h>
 
 #define nDim 3
@@ -48,6 +48,8 @@ class atom
 		float sigma;
 		int   *key;
 		
+		void allocate();
+
 		// initialize all arrays on CPU memory
 		//void initialize(float T, float lbox);
 		// initialize all arrays on GPU memory

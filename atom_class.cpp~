@@ -2,8 +2,9 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-//#include <cuda.h>
-//#include <cuda_runtime.h>
+#include <cuda.h>
+#include <cuda_runtime.h>
+#include "Hilbert3D.h"
 
 using namespace std;
 #include "atom_class.h"

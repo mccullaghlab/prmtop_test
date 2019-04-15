@@ -11,10 +11,15 @@ class bond
 {
 	public:
 		int nBonds;
+		int nBondHs;
+		int nBondnHs;
 		int nTypes;
-		int *bondType;
+		float *bondKUnique;
+		float *bondX0Unique;
 		int *bondAtoms;
-		int *bondks;
-		int *bondx0s;
+		float *bondKs;
+		float *bondX0s;
+
+		void allocate();
 
 };
